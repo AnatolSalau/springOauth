@@ -1,0 +1,1 @@
+https://sysout.ru/oauth-2-slient-credentials-flow-primer-na-spring-boot/
