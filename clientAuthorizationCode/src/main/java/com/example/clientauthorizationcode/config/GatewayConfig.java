@@ -12,11 +12,11 @@ public class GatewayConfig {
       RouteLocator gateway(RouteLocatorBuilder routeLocatorBuilder) {
             return routeLocatorBuilder
                   .routes()
-                  /** http://localhost:8081 - resource server*/
+                  /** http://localhost:8083 - resource server*/
                   .route(predicateSpec -> predicateSpec
                         .path("/admin", "/user", "/")
                         .filters(GatewayFilterSpec::tokenRelay)
-                        .uri("http://localhost:8081")
+                        .uri("http://localhost:8083")
                   )
                   .build();
       }
