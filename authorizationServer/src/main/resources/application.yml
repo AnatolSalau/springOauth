@@ -21,39 +21,6 @@ spring:
                      authorization-grant-types: client_credentials, authorization_code, refresh_token
                      scopes: user.read, user.write, roles, openid
                      require-authorization-consent: false
-   jpa:
-      hibernate:
-         ddl-auto: update
-      properties:
-         hibernate:
-            hibernate.default_schema: oauth
-            globally_quoted_identifiers: true
-            show_sql: true
-            format_sql: true
-            jdbc:
-               lob:
-                  non-contextual-creation: true
-   liquibase:
-      change-log: classpath:/db/changelog/app-changelog.yml
-      default-schema: oauth
-   datasource:
-      url: jdbc:postgresql://localhost:5432/postgres
-      driver-class-name: org.postgresql.Driver
-      username: postgres
-      password: sA#259979148307
-
-preliquibase:
-   sqlScriptReferences: classpath:/db/preliquibase/create_schema.sql
 
 server:
    port: 8082
-
-logging:
-   level:
-      org:
-         springframework:
-            security: trace
-      root: INFO
-   file:
-      path: src/main/resources/logs
-      name: src/main/resources/logs/authorization-service.log

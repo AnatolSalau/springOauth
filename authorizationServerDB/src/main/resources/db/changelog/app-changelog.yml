@@ -1,0 +1,10 @@
+databaseChangeLog:
+   -  preConditions:
+         onFail: HALT
+         onError: HALT
+
+   # Create tables
+   -  include:
+         file: scripts/create_tables.sql
+         relativeToChangelogFile: true
+
