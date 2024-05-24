@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -66,25 +67,16 @@ public class SecurityConfig {
             return http.build();
       }
 
-/*      @Bean
-      public UserDetailsService userDetailsService() {
-            var user1 = User.withUsername("user")
-                  .password("password")
-                  .authorities("read")
-                  .build();
-            return new InMemoryUserDetailsManager(user1);
-      }*/
-
       @Bean
       public UserDetailsService userDetailsService () {
             UserDetails admin = User
                   .withUsername("admin")
-                  .password("admin")
+                  .password("$2a$12$WpqXTZTHpYh/PqG5pfnWfuvN/yKxoJWSXHC3MWODY4LiOcYodixFm")
                   .roles("ADMIN")
                   .build();
             UserDetails user = User
                   .withUsername("user")
-                  .password("user")
+                  .password("$2a$12$aq7XSTeOelMHY9nG1CPeS.CBz/5TnKiazEVzfOBmFF4dOtx5Odryi")
                   .roles("USER")
                   .build();
             InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(
@@ -94,28 +86,9 @@ public class SecurityConfig {
             return inMemoryUserDetailsManager;
       }
 
-/*      @Bean
-      public UserDetailsService userDetailsService () {
-            UserDetails admin = User.withDefaultPasswordEncoder()
-                  .username("admin")
-                  .password("admin")
-                  .roles("ADMIN")
-                  .build();
-            UserDetails user = User.withDefaultPasswordEncoder()
-                  .username("user")
-                  .password("user")
-                  .roles("USER")
-                  .build();
-            InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(
-                  admin, user
-            );
-
-            return inMemoryUserDetailsManager;
-      }*/
-
       @Bean
       public PasswordEncoder passwordEncoder() {
-            return NoOpPasswordEncoder.getInstance();
+            return new BCryptPasswordEncoder();
       }
 
       @Bean
@@ -133,22 +106,6 @@ public class SecurityConfig {
             daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
             return daoAuthenticationProvider;
       }
-
-/*      @Bean
-      public RegisteredClientRepository registeredClientRepository() {
-            RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                  .clientId("client")
-                  .clientSecret("secret")
-                  .scope("read")
-                  .redirectUri("https://oidcdebugger.com/debug")
-                  .redirectUri("https://oauthdebugger.com/debug")
-                  .redirectUri("https://springone.io/authorized")
-                  .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                  .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                  .build();
-
-            return new InMemoryRegisteredClientRepository(registeredClient);
-      }*/
 
       @Bean
       public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
