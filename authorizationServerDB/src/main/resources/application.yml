@@ -7,7 +7,7 @@ spring:
                   registration:
                      redirect-uris: https://oidcdebugger.com/debug, https://oauthdebugger.com/debug, https://springone.io/authorized, http://127.0.0.1:8081/login/oauth2/code/spring
                      client-id: client
-                     client-secret: secret
+                     client-secret: $2a$12$Ah/6RpokivnYEYhFy58pWeAt/3YZB7qtK6fH05tLoWXCTywgtFGOe #secret
                      client-authentication-methods: client_secret_basic
                      authorization-grant-types: client_credentials, authorization_code, refresh_token
                      scopes: user.read, user.write, roles, openid
@@ -16,7 +16,7 @@ spring:
                   registration:
                      redirect-uris: https://oidcdebugger.com/debug, https://oauthdebugger.com/debug, https://springone.io/authorized, http://127.0.0.1:8081/login/oauth2/code/spring
                      client-id: client2
-                     client-secret: secret2
+                     client-secret: $2a$12$OSv.3I9LIJ2Q1si9UmATwODq.JCykmUVkXpVVRBUXf9DHvILM2SFq #secret2
                      client-authentication-methods: client_secret_basic
                      authorization-grant-types: client_credentials, authorization_code, refresh_token
                      scopes: user.read, user.write, roles, openid

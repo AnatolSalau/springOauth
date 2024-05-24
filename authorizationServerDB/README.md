@@ -5,3 +5,7 @@ https://medium.com/javarevisited/oauth-2-0-authorization-code-flow-in-spring-boo
 Link to DB andvalidation
 
 https://github.com/AnatolSalau/task_25_04_2024/blob/master/src/main/resources/application.yml
+
+Coffee plus software:
+
+https://www.youtube.com/watch?v=wq7oU2UCsbo&ab_channel=Coffee%2BSoftware
