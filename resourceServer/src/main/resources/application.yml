@@ -1,0 +1,19 @@
+spring:
+   security:
+      oauth2:
+         resourceserver:
+           jwt:
+              issuer-uri: http://127.0.0.1:8082
+              jwk-set-uri: http://127.0.0.1:8082/oauth2/jwks
+server:
+   port: 8083
+
+logging:
+   level:
+      org:
+         springframework:
+            security: TRACE
+      root: INFO
+   file:
+      path: src/main/resources/logs
+      name: src/main/resources/logs/resource-service.log

@@ -1,0 +1,21 @@
+server:
+   port: 8080
+messages:
+   base-uri: http://127.0.0.1:8083
+spring:
+   security:
+      oauth2:
+         client:
+            registration:
+               spring:
+                  provider: spring
+                  client-id: client2
+                  client-secret: secret2
+                  authorization-grant-type: client_credentials
+                  client-authentication-method: client_secret_basic
+                  redirect-uri: http://127.0.0.1:8081/login/oauth2/code/{registrationId}
+                  scope: user.read, user.write, roles, openid
+            provider:
+               spring:
+                  token-uri: http://127.0.0.1:8082/oauth2/token
+                  issuer-uri: http://127.0.0.1:8082
