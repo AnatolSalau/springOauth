@@ -49,9 +49,13 @@ public class SecurityConfig {
 
             OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
-            http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults());
+            http.getConfigurer(
+                  OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults()
+            );
+
             http.exceptionHandling(e -> e
-                  .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
+                  .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+            );
 
             return http.build();
       }
@@ -60,20 +64,11 @@ public class SecurityConfig {
       @Order(2)
       public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
             http
-                  .formLogin()
-                  .and()
-                  .authorizeHttpRequests().anyRequest().authenticated();
+                  .authorizeHttpRequests(ahr -> ahr.anyRequest().authenticated())
+                  .formLogin( Customizer.withDefaults());
+
             return http.build();
       }
-
-/*      @Bean
-      public UserDetailsService userDetailsService() {
-            var user1 = User.withUsername("user")
-                  .password("password")
-                  .authorities("read")
-                  .build();
-            return new InMemoryUserDetailsManager(user1);
-      }*/
 
       @Bean
       public UserDetailsService userDetailsService () {
@@ -93,25 +88,6 @@ public class SecurityConfig {
 
             return inMemoryUserDetailsManager;
       }
-
-/*      @Bean
-      public UserDetailsService userDetailsService () {
-            UserDetails admin = User.withDefaultPasswordEncoder()
-                  .username("admin")
-                  .password("admin")
-                  .roles("ADMIN")
-                  .build();
-            UserDetails user = User.withDefaultPasswordEncoder()
-                  .username("user")
-                  .password("user")
-                  .roles("USER")
-                  .build();
-            InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(
-                  admin, user
-            );
-
-            return inMemoryUserDetailsManager;
-      }*/
 
       @Bean
       public PasswordEncoder passwordEncoder() {
