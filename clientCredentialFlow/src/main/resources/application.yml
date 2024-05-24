@@ -19,3 +19,12 @@ spring:
                spring:
                   token-uri: http://127.0.0.1:8082/oauth2/token
                   issuer-uri: http://127.0.0.1:8082
+logging:
+   level:
+      org:
+         springframework:
+            security: trace
+      root: INFO
+   file:
+      path: src/main/resources/logs
+      name: src/main/resources/logs/client-credential-service.log
