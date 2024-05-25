@@ -1,10 +1,14 @@
 databaseChangeLog:
-   -  preConditions:
-         onFail: HALT
-         onError: HALT
+  - preConditions:
+      onFail: HALT
+      onError: HALT
 
-   # Create tables
-   -  include:
-         file: scripts/create_tables.sql
-         relativeToChangelogFile: true
+  # Create tables
+  - include:
+      file: scripts/create_tables.sql
+      relativeToChangelogFile: true
+  # Insert data
+  - include:
+      file: scripts/insert_data.sql
+      relativeToChangelogFile: true
 
