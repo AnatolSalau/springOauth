@@ -4,9 +4,12 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,9 +20,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
@@ -44,6 +52,14 @@ import java.util.stream.Collectors;
 @Configuration
 public class SecurityConfig {
 
+      private final JdbcTemplate jdbcTemplate;
+
+      @Autowired
+      public SecurityConfig(JdbcTemplate jdbcTemplate) {
+            this.jdbcTemplate = jdbcTemplate;
+      }
+
+
       @Bean
       @Order(1)
       public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -66,13 +82,13 @@ public class SecurityConfig {
       public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
             http
                   .authorizeHttpRequests(ahr -> ahr.anyRequest().authenticated())
-                  .formLogin( Customizer.withDefaults());
+                  .formLogin(Customizer.withDefaults());
 
             return http.build();
       }
 
       @Bean
-      public UserDetailsService userDetailsService () {
+      public UserDetailsService userDetailsService() {
             UserDetails admin = User
                   .withUsername("admin")
                   .password("$2a$12$WpqXTZTHpYh/PqG5pfnWfuvN/yKxoJWSXHC3MWODY4LiOcYodixFm")
@@ -111,21 +127,89 @@ public class SecurityConfig {
             return daoAuthenticationProvider;
       }
 
-/*      @Bean
-      public RegisteredClientRepository registeredClientRepository() {
-            RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                  .clientId("client")
-                  .clientSecret("secret")
-                  .scope("read")
-                  .redirectUri("https://oidcdebugger.com/debug")
-                  .redirectUri("https://oauthdebugger.com/debug")
-                  .redirectUri("https://springone.io/authorized")
-                  .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                  .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                  .build();
+      /*
+            @Bean
+            public RegisteredClientRepository registeredClientRepository() {
+                  RegisteredClient registeredClient1 = RegisteredClient.withId(UUID.randomUUID().toString())
+                        .clientId("client")
+                        .clientSecret("$2a$12$Ah/6RpokivnYEYhFy58pWeAt/3YZB7qtK6fH05tLoWXCTywgtFGOe")
+                        .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
+                        .redirectUri("https://oidcdebugger.com/debug")
+                        .redirectUri("https://oauthdebugger.com/debug")
+                        .redirectUri("https://springone.io/authorized")
+                        .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
+                        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                        .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
+                              AuthorizationGrantType.CLIENT_CREDENTIALS,
+                              AuthorizationGrantType.AUTHORIZATION_CODE,
+                              AuthorizationGrantType.REFRESH_TOKEN)))
+                        .build();
+                  RegisteredClient registeredClient2 = RegisteredClient.withId(UUID.randomUUID().toString())
+                        .clientId("client2")
+                        .clientSecret("$2a$12$OSv.3I9LIJ2Q1si9UmATwODq.JCykmUVkXpVVRBUXf9DHvILM2SFq")
+                        .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
+                        .redirectUri("https://oidcdebugger.com/debug")
+                        .redirectUri("https://oauthdebugger.com/debug")
+                        .redirectUri("https://springone.io/authorized")
+                        .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
+                        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                        .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
+                              AuthorizationGrantType.CLIENT_CREDENTIALS,
+                              AuthorizationGrantType.AUTHORIZATION_CODE,
+                              AuthorizationGrantType.REFRESH_TOKEN)))
+                        .build();
 
-            return new InMemoryRegisteredClientRepository(registeredClient);
-      }*/
+                  return new InMemoryRegisteredClientRepository(registeredClient1, registeredClient2);
+            }
+      */
+      @Bean
+      ApplicationRunner clientsRunner(RegisteredClientRepository repository) {
+            return args -> {
+                  var clientId1 = "client";
+                  if (repository.findByClientId(clientId1) == null) {
+                        repository.save(
+                              RegisteredClient.withId(UUID.randomUUID().toString())
+                                    .clientId(clientId1)
+                                    .clientSecret("$2a$12$Ah/6RpokivnYEYhFy58pWeAt/3YZB7qtK6fH05tLoWXCTywgtFGOe")
+                                    .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
+                                    .redirectUri("https://oidcdebugger.com/debug")
+                                    .redirectUri("https://oauthdebugger.com/debug")
+                                    .redirectUri("https://springone.io/authorized")
+                                    .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
+                                    .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                                    .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
+                                          AuthorizationGrantType.CLIENT_CREDENTIALS,
+                                          AuthorizationGrantType.AUTHORIZATION_CODE,
+                                          AuthorizationGrantType.REFRESH_TOKEN)))
+                                    .build()
+                        );
+                  }
+                  var clientId2 = "client2";
+                  if (repository.findByClientId(clientId2) == null) {
+                        repository.save(
+                              RegisteredClient.withId(UUID.randomUUID().toString())
+                                    .clientId(clientId2)
+                                    .clientSecret("$2a$12$OSv.3I9LIJ2Q1si9UmATwODq.JCykmUVkXpVVRBUXf9DHvILM2SFq")
+                                    .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
+                                    .redirectUri("https://oidcdebugger.com/debug")
+                                    .redirectUri("https://oauthdebugger.com/debug")
+                                    .redirectUri("https://springone.io/authorized")
+                                    .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
+                                    .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                                    .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
+                                          AuthorizationGrantType.CLIENT_CREDENTIALS,
+                                          AuthorizationGrantType.AUTHORIZATION_CODE,
+                                          AuthorizationGrantType.REFRESH_TOKEN)))
+                                    .build()
+                        );
+                  }
+            };
+      }
+
+      @Bean
+      public RegisteredClientRepository registeredClientRepository() {
+            return new JdbcRegisteredClientRepository(jdbcTemplate);
+      }
 
       @Bean
       public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {

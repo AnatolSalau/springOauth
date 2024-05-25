@@ -1883,3 +1883,60 @@ Original Stack Trace:
 2024-05-24T16:14:33.129+03:00 DEBUG 3796 --- [reactor-http-nio-2] a.DelegatingReactiveAuthorizationManager : Checking authorization on '/favicon.ico' using org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager@401eb4e9
 2024-05-24T16:14:33.130+03:00 DEBUG 3796 --- [reactor-http-nio-2] ebSessionServerSecurityContextRepository : Found SecurityContext 'SecurityContextImpl [Authentication=OAuth2AuthenticationToken [Principal=Name: [admin], Granted Authorities: [[OIDC_USER, SCOPE_openid, SCOPE_roles, SCOPE_user.read, SCOPE_user.write]], User Attributes: [{sub=admin, aud=[client], azp=client, auth_time=2024-05-24T13:14:32Z, iss=http://127.0.0.1:8082, exp=2024-05-24T13:44:32Z, iat=2024-05-24T13:14:32Z, nonce=m6kf63wenWNu9cE7-8q-HpiKs5zvTf4saiswlPjKJEE, jti=052e1ed4-a30a-46ff-9f34-6a0ed6ad7108, sid=oVan5KIKdbfpafkyipkQkpwsa8khByNzurYOaKmvgFo}], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[OIDC_USER, SCOPE_openid, SCOPE_roles, SCOPE_user.read, SCOPE_user.write]]]' in WebSession: 'org.springframework.web.server.session.InMemoryWebSessionStore$InMemoryWebSession@25a7e616'
 2024-05-24T16:14:33.130+03:00 DEBUG 3796 --- [reactor-http-nio-2] o.s.s.w.s.a.AuthorizationWebFilter       : Authorization successful
+2024-05-25T13:45:21.364+03:00  INFO 22368 --- [main] c.e.c.ClientAuthorizationCodeApplication : Starting ClientAuthorizationCodeApplication using Java 21.0.1 with PID 22368 (D:\JavaDevelop\Projects\springOauth\clientAuthorizationCode\build\classes\java\main started by RedmiBook in D:\JavaDevelop\Projects\springOauth)
+2024-05-25T13:45:21.365+03:00  INFO 22368 --- [main] c.e.c.ClientAuthorizationCodeApplication : No active profile set, falling back to 1 default profile: "default"
+2024-05-25T13:45:22.046+03:00  INFO 22368 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=7fe832aa-f209-39b9-b1ab-b1c4bee5b955
+2024-05-25T13:45:22.987+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2024-05-25T13:45:22.988+03:00  INFO 22368 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2024-05-25T13:45:23.451+03:00  INFO 22368 --- [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8081
+2024-05-25T13:45:23.502+03:00  INFO 22368 --- [main] c.e.c.ClientAuthorizationCodeApplication : Started ClientAuthorizationCodeApplication in 2.505 seconds (process running for 4.637)
+2024-05-25T14:17:56.286+03:00  INFO 13072 --- [main] c.e.c.ClientAuthorizationCodeApplication : Starting ClientAuthorizationCodeApplication using Java 21.0.1 with PID 13072 (D:\JavaDevelop\Projects\springOauth\clientAuthorizationCode\build\classes\java\main started by RedmiBook in D:\JavaDevelop\Projects\springOauth)
+2024-05-25T14:17:56.289+03:00  INFO 13072 --- [main] c.e.c.ClientAuthorizationCodeApplication : No active profile set, falling back to 1 default profile: "default"
+2024-05-25T14:17:57.013+03:00  INFO 13072 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=7fe832aa-f209-39b9-b1ab-b1c4bee5b955
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2024-05-25T14:17:57.982+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2024-05-25T14:17:57.984+03:00  INFO 13072 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2024-05-25T14:17:58.377+03:00  INFO 13072 --- [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8081
+2024-05-25T14:17:58.416+03:00  INFO 13072 --- [main] c.e.c.ClientAuthorizationCodeApplication : Started ClientAuthorizationCodeApplication in 2.57 seconds (process running for 3.135)
+2024-05-25T14:40:28.487+03:00  INFO 23268 --- [main] c.e.c.ClientAuthorizationCodeApplication : Starting ClientAuthorizationCodeApplication using Java 21.0.1 with PID 23268 (D:\JavaDevelop\Projects\springOauth\clientAuthorizationCode\build\classes\java\main started by RedmiBook in D:\JavaDevelop\Projects\springOauth)
+2024-05-25T14:40:28.489+03:00  INFO 23268 --- [main] c.e.c.ClientAuthorizationCodeApplication : No active profile set, falling back to 1 default profile: "default"
+2024-05-25T14:40:29.079+03:00  INFO 23268 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=7fe832aa-f209-39b9-b1ab-b1c4bee5b955
+2024-05-25T14:40:29.985+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2024-05-25T14:40:29.986+03:00  INFO 23268 --- [main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2024-05-25T14:40:30.342+03:00  INFO 23268 --- [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8081
+2024-05-25T14:40:30.374+03:00  INFO 23268 --- [main] c.e.c.ClientAuthorizationCodeApplication : Started ClientAuthorizationCodeApplication in 2.298 seconds (process running for 2.901)
