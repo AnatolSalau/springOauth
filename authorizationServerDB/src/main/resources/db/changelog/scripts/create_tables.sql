@@ -23,6 +23,8 @@ create table if not exists oauth.users
     password varchar(500) not null,
     enabled  boolean      not null
 );
+
+
 create table if not exists oauth.authorities
 (
     username  varchar(200) not null,
