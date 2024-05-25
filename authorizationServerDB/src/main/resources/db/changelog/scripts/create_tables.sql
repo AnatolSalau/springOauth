@@ -16,3 +16,17 @@ CREATE TABLE if not exists oauth.oauth2_registered_client
     token_settings                varchar(2000)                           NOT NULL,
     PRIMARY KEY (id)
 );
+
+create table if not exists oauth.users
+(
+    username varchar(200) not null primary key,
+    password varchar(500) not null,
+    enabled  boolean      not null
+);
+create table if not exists oauth.authorities
+(
+    username  varchar(200) not null,
+    authority varchar(50)  not null,
+    constraint fk_authorities_users foreign key (username) references oauth.users (username),
+    constraint username_authority UNIQUE (username, authority)
+);

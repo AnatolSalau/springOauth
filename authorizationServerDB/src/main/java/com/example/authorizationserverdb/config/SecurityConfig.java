@@ -36,14 +36,17 @@ import org.springframework.security.oauth2.server.authorization.settings.TokenSe
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
+import javax.sql.DataSource;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -86,7 +89,11 @@ public class SecurityConfig {
 
             return http.build();
       }
-
+      @Bean
+      JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+            return new JdbcUserDetailsManager(dataSource);
+      }
+/*
       @Bean
       public UserDetailsService userDetailsService() {
             UserDetails admin = User
@@ -102,20 +109,19 @@ public class SecurityConfig {
             InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(
                   admin, user
             );
-
             return inMemoryUserDetailsManager;
       }
-
+*/
       @Bean
       public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
       }
 
       @Bean
-      public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
+      public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, JdbcUserDetailsManager jdbcUserDetailsManager) {
             DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
             provider.setPasswordEncoder(passwordEncoder);
-            provider.setUserDetailsService(userDetailsService);
+            provider.setUserDetailsService(jdbcUserDetailsManager);
             return new ProviderManager(provider);
       }
 
@@ -126,42 +132,40 @@ public class SecurityConfig {
             daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
             return daoAuthenticationProvider;
       }
+      @Bean
+      ApplicationRunner usersRunner(JdbcUserDetailsManager userDetailsManager) {
+            return args -> {
+                  var userBuilder = User.builder().roles("USER");
+                  var users = Map.of(
+                        "user", "$2a$12$aq7XSTeOelMHY9nG1CPeS.CBz/5TnKiazEVzfOBmFF4dOtx5Odryi"
+                  );
+                  users.forEach((username, password) -> {
+                        if (!userDetailsManager.userExists(username)) {
+                              var user = userBuilder
+                                    .username(username)
+                                    .password(password)
+                                    .build();
+                              userDetailsManager.createUser(user);
+                        }
+                  });
 
-      /*
-            @Bean
-            public RegisteredClientRepository registeredClientRepository() {
-                  RegisteredClient registeredClient1 = RegisteredClient.withId(UUID.randomUUID().toString())
-                        .clientId("client")
-                        .clientSecret("$2a$12$Ah/6RpokivnYEYhFy58pWeAt/3YZB7qtK6fH05tLoWXCTywgtFGOe")
-                        .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
-                        .redirectUri("https://oidcdebugger.com/debug")
-                        .redirectUri("https://oauthdebugger.com/debug")
-                        .redirectUri("https://springone.io/authorized")
-                        .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
-                        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                        .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
-                              AuthorizationGrantType.CLIENT_CREDENTIALS,
-                              AuthorizationGrantType.AUTHORIZATION_CODE,
-                              AuthorizationGrantType.REFRESH_TOKEN)))
-                        .build();
-                  RegisteredClient registeredClient2 = RegisteredClient.withId(UUID.randomUUID().toString())
-                        .clientId("client2")
-                        .clientSecret("$2a$12$OSv.3I9LIJ2Q1si9UmATwODq.JCykmUVkXpVVRBUXf9DHvILM2SFq")
-                        .scopes(scopes -> scopes.addAll(Set.of("user.read", "user.write", "roles", OidcScopes.OPENID)))
-                        .redirectUri("https://oidcdebugger.com/debug")
-                        .redirectUri("https://oauthdebugger.com/debug")
-                        .redirectUri("https://springone.io/authorized")
-                        .redirectUri("http://127.0.0.1:8081/login/oauth2/code/spring")
-                        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                        .authorizationGrantTypes(grantTypes -> grantTypes.addAll(Set.of(
-                              AuthorizationGrantType.CLIENT_CREDENTIALS,
-                              AuthorizationGrantType.AUTHORIZATION_CODE,
-                              AuthorizationGrantType.REFRESH_TOKEN)))
-                        .build();
+                  var adminBuilder = User.builder().roles("ADMIN");
+                  var admins = Map.of(
+                        "admin", "$2a$12$WpqXTZTHpYh/PqG5pfnWfuvN/yKxoJWSXHC3MWODY4LiOcYodixFm"
+                  );
+                  admins.forEach((username, password) -> {
+                        if (!userDetailsManager.userExists(username)) {
+                              var admin = adminBuilder
+                                    .username(username)
+                                    .password(password)
+                                    .build();
+                              userDetailsManager.createUser(admin);
+                        }
+                  });
+            };
+      }
 
-                  return new InMemoryRegisteredClientRepository(registeredClient1, registeredClient2);
-            }
-      */
+/*
       @Bean
       ApplicationRunner clientsRunner(RegisteredClientRepository repository) {
             return args -> {
@@ -205,7 +209,7 @@ public class SecurityConfig {
                   }
             };
       }
-
+*/
       @Bean
       public RegisteredClientRepository registeredClientRepository() {
             return new JdbcRegisteredClientRepository(jdbcTemplate);
