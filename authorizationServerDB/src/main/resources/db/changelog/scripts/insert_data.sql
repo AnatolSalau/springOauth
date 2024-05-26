@@ -36,7 +36,7 @@ VALUES (
 
 INSERT INTO oauth.users (username, password, enabled)
 VALUES ('user', '$2a$12$aq7XSTeOelMHY9nG1CPeS.CBz/5TnKiazEVzfOBmFF4dOtx5Odryi', true),
-       ('admin', '$2a$12$aq7XSTeOelMHY9nG1CPeS.CBz/5TnKiazEVzfOBmFF4dOtx5Odryi', true);
+       ('admin', '$2a$12$WpqXTZTHpYh/PqG5pfnWfuvN/yKxoJWSXHC3MWODY4LiOcYodixFm', true);
 
 INSERT INTO oauth.authorities (username, authority)
 VALUES ('user', 'ROLE_USER'),

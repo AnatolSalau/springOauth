@@ -132,6 +132,7 @@ public class SecurityConfig {
             daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
             return daoAuthenticationProvider;
       }
+/*
       @Bean
       ApplicationRunner usersRunner(JdbcUserDetailsManager userDetailsManager) {
             return args -> {
@@ -164,7 +165,7 @@ public class SecurityConfig {
                   });
             };
       }
-
+*/
 /*
       @Bean
       ApplicationRunner clientsRunner(RegisteredClientRepository repository) {
