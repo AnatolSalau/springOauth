@@ -24,11 +24,13 @@ create table if not exists oauth.users
     enabled  boolean      not null
 );
 
+create type oauth.roletype as enum ('ROLE_USER', 'ROLE_ADMIN');
 
 create table if not exists oauth.authorities
 (
     username  varchar(200) not null,
-    authority varchar(50)  not null,
+    authority oauth.roletype  not null,
     constraint fk_authorities_users foreign key (username) references oauth.users (username),
     constraint username_authority UNIQUE (username, authority)
 );
+
