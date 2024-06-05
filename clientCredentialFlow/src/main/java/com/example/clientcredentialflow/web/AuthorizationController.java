@@ -26,8 +26,8 @@ public class AuthorizationController {
 
       /**
        * Method for clientCredential
-       * http://127.0.0.1:8081
-       * Postman url : http://localhost:8083/authorize?grant_type=client_credentials
+       * http://127.0.0.1:8080
+       * Postman url : http://localhost:8080/authorize?grant_type=client_credentials
        */
       @GetMapping(value = "/authorize", params = "grant_type=client_credentials")
       public Map<String, String> clientCredentialsGrant() {
